@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8
+    container_name: turtle-mysql
+    restart: unless-stopped
+    environment:
+      # root credentials
+      MYSQL_ROOT_PASSWORD: wow
+      # these two vars will NOT auto-create multiple DBs, 
+      # but they set up a limited user for later use.
+      MYSQL_USER: twow
+      MYSQL_PASSWORD: Jackal
+    volumes:
+      # persistent data
+      - wowdb-data:/var/lib/mysql
+      # your SQL-init folder (see steps below)
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3306:3306"
+
+volumes:
+  wowdb-data:
